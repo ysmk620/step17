@@ -21,7 +21,7 @@
 
             <x-primary-button class="mt-4">
                 送信する
-            </x-primary>
+            </x-primary-button>
         </form>
     </div>
 </x-app-layout>
