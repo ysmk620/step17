@@ -20,4 +20,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('post/create',[PostController::class,'create']);
 
+Route::post('post',[PostController::class,'stere'])->name('post.store')
+
 require __DIR__.'/auth.php';
