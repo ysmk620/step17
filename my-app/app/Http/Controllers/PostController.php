@@ -12,11 +12,14 @@ class PostController extends Controller
     }
 
     public function store(Request $request){
-        $post =Post::create([
-            'title'=>$request->title,
-            'body'=>$request->body
-        ]);
-        $request->session()->flash('message','保存しました');
-        return back();
-    }
+    $validated = $request->validate([
+        'title' => 'required|max:20',
+        'body' => 'required|max:400',
+    ]);
+
+    Post::create($validated);
+
+    return back()->with('message', '保存しました');
+}
+
 }
