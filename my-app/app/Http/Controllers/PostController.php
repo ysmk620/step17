@@ -20,6 +20,11 @@ class PostController extends Controller
     Post::create($validated);
 
     return back()->with('message', '保存しました');
-}
+    }
+
+    public function index(){
+        $posts = Post::all();
+        return view('post.index',compact('posts'));
+    }
 
 }
