@@ -19,10 +19,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('post/create',[PostController::class,'create']);
+Route::get('post/create',[PostController::class,'create'])
+->middleware(['auth','admin']);
 
 Route::post('post',[PostController::class,'store'])->name('post.store');
 
 Route::get('post',[PostController::class,'index']);
+
 
 require __DIR__.'/auth.php';
