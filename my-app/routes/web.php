@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('auth');
+});
 
 
 Route::get('/dashboard', function () {
@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('post/create', [PostController::class, 'create'])
-    ->middleware(['auth', 'admin']);
+    ->middleware(['auth', 'admin'])->name('post.create');
 
 Route::post('post', [PostController::class, 'store'])->name('post.store');
 
