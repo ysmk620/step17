@@ -3,6 +3,8 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LikeController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,6 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('post/{post}/like', [LikeController::class, 'store'])->name('post.like');
 });
 
 Route::get('post/create', [PostController::class, 'create'])
@@ -33,5 +36,6 @@ Route::get('post/{post}/edit', [PostController::class, 'edit'])->name('post.edit
 Route::patch('post/{post}', [PostController::class, 'update'])->name('post.update');
 
 Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+
 
 require __DIR__ . '/auth.php';

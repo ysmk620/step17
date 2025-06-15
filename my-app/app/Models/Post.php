@@ -15,7 +15,19 @@ class Post extends Model
         'user_id'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    // 投稿が特定ユーザーにいいねされているかを確認する便利メソッド（オプション）
+    public function isLikedBy(User $user): bool
+    {
+        return $this->likes->contains('user_id', $user->id);
     }
 }

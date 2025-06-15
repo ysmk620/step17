@@ -27,6 +27,20 @@
                     {{$post->created_at}} / {{$post->user->name}}
                 </p>
             </div>
+            <div class="p-4">
+                <form method="POST" action="{{ route('post.like', $post) }}">
+                    @csrf
+                    @php
+                    $liked = $post->isLikedBy(auth()->user());
+                    @endphp
+                    <button type="submit" class="{{ $liked ? 'text-red-600 font-bold' : 'text-blue-600' }} hover:underline">
+                        {{ $liked ? 'いいね済み' : 'いいね' }}
+                    </button>
+                </form>
+                <p class="text-sm text-gray-600">
+                    いいね数：{{ $post->likes_count }}
+                </p>
+            </div>
         </div>
         @endforeach
         <div class="mb-4">
