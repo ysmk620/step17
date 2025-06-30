@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('post/create', [PostController::class, 'create'])
-    ->middleware(['auth', 'admin'])->name('post.create');
+    ->middleware(['auth', 'verified'])->name('post.create');
 
 Route::post('post', [PostController::class, 'store'])->name('post.store');
 
