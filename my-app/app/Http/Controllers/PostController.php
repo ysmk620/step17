@@ -19,9 +19,7 @@ class PostController extends Controller
             'body' => 'required|max:400',
         ]);
 
-        $validated['user_id'] = auth()->id();
-
-        Post::create($validated);
+        $request->user()->posts()->create($validated);
 
         return back()->with('message', '保存しました');
     }
@@ -44,25 +42,27 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
         return view('post.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
-    {
-        $validated = $request->validate([
-            'title' => 'required|max:20',
-            'body' => 'required|max:400',
-        ]);
+{
+    $this->authorize('update', $post);
 
-        $validated['user_id'] = auth()->id();
+    $validated = $request->validate([
+        'title' => 'required|max:20',
+        'body'  => 'required|max:400',
+    ]);
 
-        $post->update($validated);
+    $post->update($validated);
 
-        return back()->with('message', '更新しました');
-    }
+    return back()->with('message', '更新しました');
+}
 
     public function destroy(Request $request, post $post)
     {
+        $this->authorize('delete', $post);
         $post->delete();
         $request->session()->flash('message', '削除しました');
         return redirect()->route('post.index');
