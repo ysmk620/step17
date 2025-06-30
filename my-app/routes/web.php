@@ -19,23 +19,37 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('post/{post}/like', [LikeController::class, 'store'])->name('post.like');
 });
 
-Route::get('post/create', [PostController::class, 'create'])
-    ->middleware(['auth', 'verified'])->name('post.create');
+Route::middleware('auth')->group(function () {
+    Route::get('post',             [PostController::class, 'index'])->name('post.index');
+    Route::get('post/show/{post}', [PostController::class, 'show'])->name('post.show');
+});
 
-Route::post('post', [PostController::class, 'store'])->name('post.store');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('post/create',        [PostController::class, 'create'])->name('post.create');
+    Route::post('post',              [PostController::class, 'store'])->name('post.store');
+    Route::get('post/{post}/edit',   [PostController::class, 'edit'])->name('post.edit');
+    Route::patch('post/{post}',      [PostController::class, 'update'])->name('post.update');
+    Route::delete('post/{post}',     [PostController::class, 'destroy'])->name('post.destroy');
 
-Route::get('post', [PostController::class, 'index'])->name('post.index');
+    Route::post('post/{post}/like',  [LikeController::class, 'store'])->name('post.like');
+});
 
-Route::get('post/show/{post}', [PostController::class, 'show'])->name('post.show');
+// Route::get('post/create', [PostController::class, 'create'])
+//     ->middleware(['auth', 'verified'])->name('post.create');
 
-Route::get('post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+// Route::post('post', [PostController::class, 'store'])->name('post.store');
 
-Route::patch('post/{post}', [PostController::class, 'update'])->name('post.update');
+// Route::get('post', [PostController::class, 'index'])->name('post.index');
 
-Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+// Route::get('post/show/{post}', [PostController::class, 'show'])->name('post.show');
+
+// Route::get('post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+
+// Route::patch('post/{post}', [PostController::class, 'update'])->name('post.update');
+
+// Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
 
 
 require __DIR__ . '/auth.php';
